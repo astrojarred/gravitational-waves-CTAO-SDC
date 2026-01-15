@@ -1,0 +1,36 @@
+{
+    "alert_type": "PRELIMINARY",
+    "time_created": "2029-04-18T02:08:53.193346Z",
+    "superevent_id": "GW290418b",
+    "urls": {
+        "gracedb": "https://example.org/superevents/GW290418b/view/"
+    },
+    "event": {
+        "time": "2029-04-18T02:08:43.193346Z",
+        "far": 9e-14,
+        "significant": true,
+        "instruments": [
+            "H1",
+            "K1",
+            "L1"
+        ],
+        "group": "CBC",
+        "pipeline": "gstlal",
+        "search": "MDC",
+        "properties": {
+            "HasNS": 0.95,
+            "HasRemnant": 0.91,
+            "HasMassGap": 0.01
+        },
+        "classification": {
+            "BNS": 0.95,
+            "NSBH": 0.01,
+            "BBH": 0.03,
+            "Terrestrial": 0.01
+        },
+        "duration": null,
+        "central_frequency": null,
+        "skymap": "U0lNUExFICA9ICAgICAgICAgICAgICAgICAgICBUIC8gY29uZm..."
+    },
+    "external_coinc": null
+}

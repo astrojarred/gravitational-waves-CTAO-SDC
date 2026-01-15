@@ -1,0 +1,35 @@
+{
+    "alert_type": "PRELIMINARY",
+    "time_created": "2034-10-23T00:18:02.205072Z",
+    "superevent_id": "GW341023a",
+    "urls": {
+        "gracedb": "https://example.org/superevents/GW341023a/view/"
+    },
+    "event": {
+        "time": "2034-10-23T00:17:52.205072Z",
+        "far": 9e-14,
+        "significant": true,
+        "instruments": [
+            "L1",
+            "V1"
+        ],
+        "group": "CBC",
+        "pipeline": "gstlal",
+        "search": "MDC",
+        "properties": {
+            "HasNS": 0.95,
+            "HasRemnant": 0.91,
+            "HasMassGap": 0.01
+        },
+        "classification": {
+            "BNS": 0.95,
+            "NSBH": 0.01,
+            "BBH": 0.03,
+            "Terrestrial": 0.01
+        },
+        "duration": null,
+        "central_frequency": null,
+        "skymap": "U0lNUExFICA9ICAgICAgICAgICAgICAgICAgICBUIC8gY29uZm..."
+    },
+    "external_coinc": null
+}
