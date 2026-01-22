@@ -118,7 +118,7 @@ meta = pd.read_csv("metadata/CTAO-SDC-metadata.csv", converters={'tilepy_pointin
 
 #### Columns
 
-- **`sdc_event_id`**: Sequential event ID (0-indexed) for the data challenge
+- **`sdc_event_id`**: Sequential event ID for the data challenge [**not sequential!**]
 - **`superevent_id`**: Dummy gravitational wave superevent identifier (format: GWYYMMDDa/b/c...)
 - **`model_id`**: Original model ID from the O5 catalog (this is for reference only and not needed for the SDC)
 - **`model_filepath`**: Relative path to the gammapy model FITS file
@@ -155,64 +155,4 @@ The pointings array is generated with the open-source `tilepy` software package 
 
 ### 4. Tiling Config (`config/sdc.ini`)
 
-The configution of the tiling algorithm is presented in the sdc.ini file. The tiling derived for the SDC can be re-generated using this precise configuration. Else, a modified tiling set can be obtained by tuning those parameters. The software used to derived the pointings is `tilepy`. The precise code used to obtained the tilings can be found in ([read more here](https://github.com/mseglar/science-data-challenge-gw))  
-
-## Caveats and Limitations
-
-## Usage with Gammapy
-
-To load and use a model in gammapy:
-
-```python
-from gammapy.modeling.models import LightCurveTemplateTemporalModel
-from astropy.time import Time
-
-# Load the temporal model
-temporal_model = LightCurveTemplateTemporalModel.read(
-    "gammapy_models/GW280102a_catO5_1856_gammapy.fits",
-    format="map"
-)
-
-# Evaluate flux at specific time and energy
-time = Time("2028-01-02T00:03:39.819055", scale="utc")
-energy = 1.0 * u.TeV  # Adjust to your energy range
-
-# The model can be integrated into a full SkyModel
-from gammapy.modeling.models import (
-    PointSpatialModel,
-    ConstantSpectralModel,
-    SkyModel
-)
-from astropy.coordinates import SkyCoord
-
-# Get position from metadata or FITS header
-position = SkyCoord(ra=273.93*u.deg, dec=-0.86*u.deg, frame="icrs")
-spatial_model = PointSpatialModel(lon_0=position.ra, lat_0=position.dec)
-
-# Create spectral model (constant normalization, temporal variation from template)
-spectral_model = ConstantSpectralModel(const="1 cm-2 s-1 GeV-1")
-
-# Combine into full model
-sky_model = SkyModel(
-    spatial_model=spatial_model,
-    spectral_model=spectral_model,
-    temporal_model=temporal_model,
-    name="GW_event"
-)
-```
-
-## File Structure
-
-```text
-.
-├── CTAO-SDC-GW-metadata.csv      # Main metadata table
-├── gammapy_models/                # Spectral models (FITS files)
-│   ├── GW280102a_catO5_1856_gammapy.fits
-│   └── ...
-└── GCNs/                          # GCN notices (JSON files)
-    ├── GW280102a_GCN.json
-    └── ...
-├── metadata/
-│   ├── CTAO-SDC-metadata.csv      # Metadata for the CTAO SDC
-│   └── ...
-```
+The configuration of the tiling algorithm is presented in the sdc.ini file. The tiling derived for the SDC can be re-generated using this precise configuration. Else, a modified tiling set can be obtained by tuning those parameters. The software used to derived the pointings is `tilepy`. The precise code used to obtained the tilings can be found in ([read more here](https://github.com/mseglar/science-data-challenge-gw))  
