@@ -104,12 +104,23 @@ The metadata CSV file provides a comprehensive index of all events and their ass
 - **`timestamp_utc`**: Event trigger time in UTC (ISO format)
 - **`distance_mpc`**: Distance to the source in Megaparsecs (Mpc)
 - **`z`**: Cosmological redshift
-- **`pointings`**: List of telescope pointings:
-  - `pointing_id`: Sequential pointing ID (0-indexed) for the data challenge
-  - `start_time`: Start time of the pointing in UTC (ISO format)
-  - `duration`: Duration of the pointing in seconds
+- **`alert_ifos`**: List of interferometers that alerted on the event (JSON string)
+- **`alert_area90`**: Area of the 90% containment radius of the event (square degrees)
+- **`alert_distance90`**: Distance to the event in Mpc (90% containment radius)
+- **`tilepy_n_observations`**: Number of follow-up pointings calculated by tilepy
+- **`tilepy_prob_covered`**: Probability that the event is covered by the follow-up pointings
+- **`tilepy_first_ra`**: Right Ascension of the first pointing in degrees
+- **`tilepy_first_dec`**: Declination of the first pointing in degrees
+- **`tilepy_first_latency`**: Latency of the first pointing in seconds
+- **`tilepy_first_utc`**: Start time of the first pointing in UTC (ISO format)  
+- **`tilepy_pointings`**: List of telescope pointings:
   - `ra`: Right Ascension of the pointing in degrees
   - `dec`: Declination of the pointing in degrees
+  - `latency`: Latency of the pointing after the event onset in seconds
+  - `duration`: Duration of the pointing in seconds (fixed to 5 mins for the SDC)
+  - `obs_time_utc`: Start time of the pointing in UTC (ISO format)
+  - `observatory`: "north" or "south", indicating the CTAO observatory site
+
 
 #### Pointings
 
