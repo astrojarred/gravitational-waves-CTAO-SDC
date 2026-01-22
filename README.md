@@ -66,7 +66,6 @@ Some metadata is added to the FITS header for reference:
 - `DISTANCE`: Distance to the source in Mpc
 - `REDSHIFT`: Cosmological redshift (z)
 
-
 ### 2. GCN Notices (`GCNs/`)
 
 Dummy GCN notices are provided in JSON format for each event.
@@ -90,9 +89,32 @@ Each GCN contains:
 
 **Note:** Any other fields not mentioned here are dummy/default values.
 
-### 3. Metadata Table (`metadata/CTAO-SDC-metadata.csv`)
+### 3. Metadata Table
 
-The metadata CSV file provides a comprehensive index of all events and their associated data products.
+The metadata files provide a comprehensive index of all events and their associated data products.
+
+The files are provided in both Parquet and CSV format.
+
+#### Parquet File
+
+If possible, we recommend using the Parquet file for an easier inference of types and missing values. The file can be loaded with:
+
+```python
+import pandas as pd
+meta = pd.read_parquet("metadata/CTAO-SDC-metadata.parquet")
+```
+
+> NOTE: you might need to install the `pyarrow` package into your Python environment to read the Parquet file.
+
+#### CSV File
+
+The CSV file provides a comprehensive index of all events and their associated data products. Because the table contains lists and dictionaries, the file should be loaded with caution like so:
+
+```python
+import json
+import pandas as pd
+meta = pd.read_csv("metadata/CTAO-SDC-metadata.csv", converters={'tilepy_pointings': json.loads, 'alert_ifos': json.loads})
+```
 
 #### Columns
 
@@ -121,7 +143,6 @@ The metadata CSV file provides a comprehensive index of all events and their ass
   - `obs_time_utc`: Start time of the pointing in UTC (ISO format)
   - `observatory`: "north" or "south", indicating the CTAO observatory site
 
-
 #### Pointings
 
 The pointings array is generated with the open-source `tilepy` software package ([read more here](https://tilepy.com/)). Each observation consists of multiple five-minute pointings covering the localization region of the skymap. The order of the pointings is optimized by `tilepy`.
@@ -137,7 +158,6 @@ The pointings array is generated with the open-source `tilepy` software package 
 The configution of the tiling algorithm is presented in the sdc.ini file. The tiling derived for the SDC can be re-generated using this precise configuration. Else, a modified tiling set can be obtained by tuning those parameters. The software used to derived the pointings is `tilepy`. The precise code used to obtained the tilings can be found in ([read more here](https://github.com/mseglar/science-data-challenge-gw))  
 
 ## Caveats and Limitations
-
 
 ## Usage with Gammapy
 
