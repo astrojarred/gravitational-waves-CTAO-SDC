@@ -66,7 +66,6 @@ Some metadata is added to the FITS header for reference:
 - `DISTANCE`: Distance to the source in Mpc
 - `REDSHIFT`: Cosmological redshift (z)
 
-
 ### 2. GCN Notices (`GCNs/`)
 
 Dummy GCN notices are provided in JSON format for each event.
@@ -90,9 +89,32 @@ Each GCN contains:
 
 **Note:** Any other fields not mentioned here are dummy/default values.
 
-### 3. Metadata Table (`metadata/CTAO-SDC-metadata.csv`)
+### 3. Metadata Table
 
-The metadata CSV file provides a comprehensive index of all events and their associated data products.
+The metadata files provide a comprehensive index of all events and their associated data products.
+
+The metadata is provided in both Parquet and CSV formats:
+
+#### Parquet File
+
+If possible, we recommend using the Parquet file for an easier inference of types and missing values. The file can be loaded with:
+
+```python
+import pandas as pd
+meta = pd.read_parquet("metadata/CTAO-SDC-metadata.parquet")
+```
+
+> NOTE: you might need to install the `pyarrow` package into your Python environment to read the Parquet file.
+
+#### CSV File
+
+The CSV file provides a comprehensive index of all events and their associated data products. Because the table contains lists and dictionaries, the file should be loaded with caution like so:
+
+```python
+import json
+import pandas as pd
+meta = pd.read_csv("metadata/CTAO-SDC-metadata.csv", converters={'tilepy_pointings': json.loads, 'alert_ifos': json.loads})
+```
 
 #### Columns
 
@@ -104,12 +126,22 @@ The metadata CSV file provides a comprehensive index of all events and their ass
 - **`timestamp_utc`**: Event trigger time in UTC (ISO format)
 - **`distance_mpc`**: Distance to the source in Megaparsecs (Mpc)
 - **`z`**: Cosmological redshift
-- **`pointings`**: List of telescope pointings:
-  - `pointing_id`: Sequential pointing ID (0-indexed) for the data challenge
-  - `start_time`: Start time of the pointing in UTC (ISO format)
-  - `duration`: Duration of the pointing in seconds
+- **`alert_ifos`**: List of interferometers that alerted on the event (JSON string)
+- **`alert_area90`**: Area of the 90% containment radius of the event (square degrees)
+- **`alert_distance90`**: Distance to the event in Mpc (90% containment radius)
+- **`tilepy_n_observations`**: Number of follow-up pointings calculated by tilepy
+- **`tilepy_prob_covered`**: Probability that the event is covered by the follow-up pointings
+- **`tilepy_first_ra`**: Right Ascension of the first pointing in degrees
+- **`tilepy_first_dec`**: Declination of the first pointing in degrees
+- **`tilepy_first_latency`**: Latency of the first pointing in seconds
+- **`tilepy_first_utc`**: Start time of the first pointing in UTC (ISO format)  
+- **`tilepy_pointings`**: List of telescope pointings:
   - `ra`: Right Ascension of the pointing in degrees
   - `dec`: Declination of the pointing in degrees
+  - `latency`: Latency of the pointing after the event onset in seconds
+  - `duration`: Duration of the pointing in seconds (fixed to 5 mins for the SDC)
+  - `obs_time_utc`: Start time of the pointing in UTC (ISO format)
+  - `observatory`: "north" or "south", indicating the CTAO observatory site
 
 #### Pointings
 
@@ -126,7 +158,6 @@ The pointings array is generated with the open-source `tilepy` software package 
 The configution of the tiling algorithm is presented in the sdc.ini file. The tiling derived for the SDC can be re-generated using this precise configuration. Else, a modified tiling set can be obtained by tuning those parameters. The software used to derived the pointings is `tilepy`. The precise code used to obtained the tilings can be found in ([read more here](https://github.com/mseglar/science-data-challenge-gw))  
 
 ## Caveats and Limitations
-
 
 ## Usage with Gammapy
 
