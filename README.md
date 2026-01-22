@@ -121,6 +121,9 @@ The pointings array is generated with the open-source `tilepy` software package 
 - Events are randomly distributed between 2028-01-01 00:00:00 UTC and 2034-12-31 00:00:00 UTC
 - Superevent IDs are assigned based on the date, with sequential letters (a, b, c...) for multiple events on the same day
 
+### 4. Tiling Config (`config/sdc.ini`)
+
+The configution of the tiling algorithm is presented in the sdc.ini file. The tiling derived for the SDC can be re-generated using this precise configuration. Else, a modified tiling set can be obtained by tuning those parameters. The software used to derived the pointings is `tilepy`. The precise code used to obtained the tilings can be found in ([read more here](https://github.com/mseglar/science-data-challenge-gw))  
 
 ## Caveats and Limitations
 
