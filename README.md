@@ -93,7 +93,7 @@ Each GCN contains:
 
 The metadata files provide a comprehensive index of all events and their associated data products.
 
-The files are provided in both Parquet and CSV format.
+The metadata is provided in both Parquet and CSV formats:
 
 #### Parquet File
 
