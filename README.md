@@ -29,6 +29,16 @@ Due to this, in addition the science case of short Gamma-ray Bursts, this datase
 
 The spectral models are stored as FITS files in gammapy-compatible format using `LightCurveTemplateTemporalModel`.
 
+Example to read in models with `gammapy`:
+
+```python
+import gammapy
+from gammapy.modeling.models import LightCurveTemplateTemporalModel
+temporal_model = LightCurveTemplateTemporalModel.read(filename, format="map")
+```
+
+For a full example notebook (including adding redshift+EBL absorption), please see the included notebook `using-spectral-models.ipynb`.
+
 #### File Naming Convention
 
 - Format: `{superevent_id}_{original_model_filename}_gammapy.fits`
