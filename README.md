@@ -166,3 +166,32 @@ The pointings array is generated with the open-source `tilepy` software package 
 ### 4. Tiling Config (`config/sdc.ini`)
 
 The configuration of the tiling algorithm is presented in the sdc.ini file. The tiling derived for the SDC can be re-generated using this precise configuration. Else, a modified tiling set can be obtained by tuning those parameters. The software used to derived the pointings is `tilepy`. The precise code used to obtained the tilings can be found in ([read more here](https://github.com/mseglar/science-data-challenge-gw))  
+
+### 5. Recommended Followup Strategy (and cuts)
+
+Since there are many more alerts than time available to follow up, we recommend the following cuts. They are flexible and can be tweaked by the simulators in order to achieve the desired number of follow ups.
+
+#### Strategy
+
+The included list of pointings should be followed in a loop for 2hrs or until source sets. If a hot spot is detected with real-time analysis, stay at that pointing for as long as possible. If no real-time analysis is available for these simulations, just loop the list of pointings for 2-3hrs depending on the time allotted to the proposal. This will not decrease the number of detections overall, but simply reduce the significance of these detections.
+
+#### Cuts
+
+For follow-ups with delays <= 1hr:
+
+- tilepy_first_latency <= 3600 s
+- tilepy_prob_covered > 0.9
+
+For follow-ups with delays > 1hr:
+
+- tilepy_first_latency > 3600 s
+- tilepy_prob_covered > 0.99
+- alert_area90 <= 10 deg2 
+- this applies a tight cut on area so that we only follow up delayed events which can be covered very easily with 1-2 pointings, depending on the shape of the localization region
+
+#### Estimated follow-up rates
+
+On the current dataset, these cuts return:
+
+- ~14 low-latency events per year in CTAO-N, with an average of 10 pointings each
+- ~5 high-latency events per year in CTAO-N, with an average of 1-2 pointings each
